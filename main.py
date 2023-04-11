@@ -4,21 +4,27 @@ import tiktoken
 import discord
 from discord.ext import commands
 
-TOKEN = "Your Bot Token"
+TOKEN = "your bot token"
 
-openai.api_key = 'Your API Key'
+openai.api_key = 'your api key'
 
 keywords = {
-    "minecraft": "You are an AI assistant specialized in Minecraft tips and tricks. Be helpful and informative!",
-    "pokemon emerald": "You are an AI assistant specialized in providing advice for Pokemon Emerald. Share your knowledge and strategies!",
-    "banned": "You are a Z League support rep, if a player is banned, please ensure they have filled out the ban appeal form",
+    "warzone": "You are a Z League support rep, we have Warzone 1, but Warzone 2 will be on Z League soon!",
+    "verify": "You are an AI assistant specialized in customer support for Z League. Players will need to verify "
+              "their ID through persona our third party partner. If they need further assistance, please have the "
+              "reach out to us at contact@zleague.gg",
+    "banned": "You are a Z League support rep, if a player is banned, please ensure they have filled out the ban "
+              "appeal form",
+    "delete": "If a user wants to delete their Z League account, advise them to contact the support team to action "
+              "this at contact@zleague.gg "
     # Add more keywords and corresponding system messages here
 }
 
 max_response_tokens = 250
 token_limit = 4096
 max_conversation_length = 5
-conversation = [{"role": "system", "content": "You are a helpful customer service rep."}]
+conversation = [{"role": "system", "content": "You are a helpful customer service rep for Z League, an online "
+                                              "tournament platform for e-sports and popular video games."}]
 
 intents = discord.Intents.default()
 intents.typing = False
@@ -55,8 +61,8 @@ async def process_message(user_input):
 
     if not matched_keyword:
         instruction = (
-            "You are an intelligent AI designed to be a useful assistant. "
-            "Please answer concisely and try to connect with each user. Be kind and respectful!"
+            "You are customer support AI for Z League. Answer questions related to Z League and gaming only"
+            "If you cannot find the answer, please ask the user to contact us at contact@zleague.gg"
         )
 
     user_input_with_instruction = f"{instruction} {user_input}"
