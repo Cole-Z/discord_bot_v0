@@ -1,12 +1,13 @@
 import os
+import re
 import openai
 import tiktoken
 import discord
 from discord.ext import commands
 
-TOKEN = "bot token"
+TOKEN = "your bot token"
 
-openai.api_key = 'open ai key'
+openai.api_key = 'your api key'
 
 keywords = {
     "warzone": "Z League host Warzone 1(Caldera) events, we hope to release Warzone 2 events soon, stay tuned!",
@@ -19,7 +20,9 @@ keywords = {
               "this at contact@zleague.gg.",
     "dispute": "If a user has an issue with their score in an event, advise them that scores can sometimes take 45 "
                "minutes to update, if they are still having issues after that time, please have them contact us by "
-               "email. "
+               "email. ",
+    "league of legends": "Z League hosts League of Legends events as well. Check our app for the latest tournaments "
+                         "and sign up!",
     # Add more keywords and corresponding system messages here
 }
 
@@ -61,7 +64,7 @@ async def process_message(user_input):
     instruction = ""
 
     for keyword, message in keywords.items():
-        if keyword in lower_user_input:
+        if re.search(r'\b' + keyword + r'\b', lower_user_input):
             instruction = message
             matched_keyword = True
             break
